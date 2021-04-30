@@ -51,6 +51,7 @@ TEST(BufferPoolManagerInstanceTest, DISABLED_BinaryDataTest) {
 
   // Scenario: Once we have a page, we should be able to read and write content.
   std::memcpy(page0->GetData(), random_binary_data, PAGE_SIZE);
+  
   EXPECT_EQ(0, std::memcmp(page0->GetData(), random_binary_data, PAGE_SIZE));
 
   // Scenario: We should be able to create new pages until we fill up the buffer pool.
@@ -67,6 +68,7 @@ TEST(BufferPoolManagerInstanceTest, DISABLED_BinaryDataTest) {
   // Scenario: After unpinning pages {0, 1, 2, 3, 4} we should be able to create 5 new pages
   for (int i = 0; i < 5; ++i) {
     EXPECT_EQ(true, bpm->UnpinPage(i, true));
+
     bpm->FlushPage(i);
 
   }
@@ -85,7 +87,7 @@ TEST(BufferPoolManagerInstanceTest, DISABLED_BinaryDataTest) {
   remove("test.db");
 
   delete bpm;
-  
+
   delete disk_manager;
 }
 
@@ -139,6 +141,7 @@ TEST(BufferPoolManagerInstanceTest, DISABLED_SampleTest) {
 
   // Shutdown the disk manager and remove the temporary file we created.
   disk_manager->ShutDown();
+
   remove("test.db");
 
   delete bpm;
